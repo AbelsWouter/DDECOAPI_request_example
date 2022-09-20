@@ -1,4 +1,4 @@
-# DDECOAPI_request_example
+# DDECOAPI Request Example
 This repository contains the code to request data via the DD-ECO-API
 
 Extra Information:
