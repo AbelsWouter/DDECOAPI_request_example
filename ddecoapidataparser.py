@@ -72,17 +72,15 @@ class dataparser:
 
  
     def check_ending(self,
-                     response: list,
-                     page_size: int) -> bool:
+                     response: list) -> bool:
         """Check if ending of the response pages is reached (Response size smaller than max page size)
 
         Args:
             response (list,optional: Response list from query. Defaults to None.
-    #       page_size (int, optional): Max page size. Defaults to None
         Returns:
             bool: length of response against pagesize
         """
-        if len(response) < page_size:
+        if not response['paging']['next']:
             return True
         else:
             return False
