@@ -150,7 +150,7 @@ class dataparser:
                 response = request['result']
                 json_request_list.extend(response)
 
-                if self.check_ending(request, page_size):
+                if self.check_ending(request):
                     return self.return_dataframe(json_request_list, parse_watertypes)
 
                 page += 1
