@@ -1,15 +1,20 @@
-"""Uses ddecoapidataparser script to download AquaDesk data via the DD-ECO-API v2"""
-from ddecoapidataparser import dataparser
+"""Uses ddecoapiparser package to download AquaDesk data via the DD-ECO-API v2
+First in your terminal write: "pip install ddecoapiparser" to download the ddecoapiparser package from PyPI
+"""
+import ddecoapiparser as dd
+
 
 """
 File: ddecoapi_uitvraag_voorbeeld.py
 Author: Wouter Abels (wouter.abels@rws.nl)
 Created: 28/03/22
-Last modified: 19/09/2022
-Python ver: 3.10.6
+Last modified: 18/09/23
+Python ver: 3.11.4
 """
 
 """
+The ddecoapiparser package is found here: https://pypi.org/project/ddecoapiparser/
+Source code of the ddecoapiparser is found here: https://github.com/AbelsWouter/ddecoapiparser
 Limited Documentation of the API is found here: https://github.com/DigitaleDeltaOrg/dd-eco-api-specs
 URL's of the API can be found here: https://ddecoapi.aquadesk.nl/index.html
 Syntax for Filtering the API request is found here: https://github.com/DigitaleDeltaOrg/dd-eco-api/blob/main/filtering.md
@@ -23,21 +28,25 @@ api_key = (str)
 api_key = ''
 
 """
-Configure API version and call the dataparser class from the ddecoapidataparser script.
-ddecoapi = class(str).
-- Change this if DD-ECO-API version changes.
-"""
-ddecoapi = dataparser('https://ddecoapi.aquadesk.nl/v2/')
-
-
-"""
 EXAMPLE 1:
 Get filtered dataframe of requested data, in this example only MACEV data after 01-04-2021 is requested and the measurementobjectnames are excluded.
 """
-data_query = ddecoapi.parse_data_dump(query_url = 'measurements', query_filter = 'measurementdate:ge:"2021-04-01";taxontype:eq:"MACEV"', skip_properties='measurementobjectname', api_key = api_key)
+locations =  ["NRDZE_0001","NRDZE_0007"]
+data_query = dd.parse_data_dump(query_url = 'measurements', query_filter = f"measurementdate:ge:'2015-01-01';measurementdate:le:'2020-12-31';taxontype:eq:'MACEV';measurementobject:in:{locations}", api_key = api_key)
+"""
+To view the data use a print statement or write the query to a CSV file.
+"""
+print(data_query)
+data_query.to_csv('measurement_data.csv')
 
 """
 EXAMPLE 2:
 Load TWN-list data via the DD-ECO-API, in this example query the TWN-list for all MACEV species is requested. This works without specific API Key since query_url parameters is openly accessible.
 """
-twn_query = ddecoapi.parse_data_dump(query_url = 'parameters', query_filter = 'parametertype:eq:"TAXON";taxontype:eq:"MACEV"', api_key = api_key)
+twn_query = dd.parse_data_dump(query_url = 'parameters', query_filter = 'parametertype:eq:"TAXON";taxontype:eq:"MACEV"', api_key = api_key)
+
+"""
+To view the data use a print statement or write the query to a CSV file.
+"""
+twn_query.to_csv('parameter_data.csv')
+print(twn_query)

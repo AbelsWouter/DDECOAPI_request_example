@@ -1,7 +1,9 @@
 # DDECOAPI Request Example
-This repository contains the code to request data via the DD-ECO-API
+This repository contains the code to request data via the DD-ECO-API using the ddecoapiparser package.
 
 Extra Information:
+ - The ddecoapiparser package is found here: https://pypi.org/project/ddecoapiparser/
+ - Source code of the ddecoapiparser is found here: https://github.com/AbelsWouter/ddecoapiparser
  - Limited Documentation of the API is found here: https://github.com/DigitaleDeltaOrg/dd-eco-api-specs
  - Implementation of the API is found here: https://ddecoapi.aquadesk.nl/index.html
  - Syntax for Filtering the API request is found here: https://github.com/DigitaleDeltaOrg/dd-eco-api/blob/main/filtering.md
