@@ -2,7 +2,8 @@
 First in your terminal write: "pip install ddecoapiparser" to download the ddecoapiparser package from PyPI
 """
 import ddecoapiparser as dd
-
+import dotenv
+import os
 
 """
 File: ddecoapi_uitvraag_voorbeeld.py
@@ -25,14 +26,17 @@ Configure API key
 api_key = (str)
 - Fill in the key of own organization to download measurement data from the AquaDesk.
 """
-api_key = ''
+dotenv.load_dotenv()
+api_key = os.getenv('API_KEY')
 
 """
 EXAMPLE 1:
 Get filtered dataframe of requested data, in this example only MACEV data after 01-04-2021 is requested and the measurementobjectnames are excluded.
 """
 locations =  ["NRDZE_0001","NRDZE_0007"]
-data_query = dd.parse_data_dump(query_url = 'measurements', query_filter = f"measurementdate:ge:'2015-01-01';measurementdate:le:'2020-12-31';taxontype:eq:'MACEV';measurementobject:in:{locations}", api_key = api_key)
+skip_properties = 'changedate,compartment,limitsymbol,collectiondate,measuredunit,measurementobject'
+data_query = dd.parse_data_dump(query_url = 'measurements', query_filter = f"measurementdate:ge:'2015-01-01';measurementdate:le:'2020-12-31';taxontype:eq:'MACEV';measurementobject:in:{locations}", api_key = api_key, skip_properties=skip_properties)
+
 """
 To view the data use a print statement or write the query to a CSV file.
 """
